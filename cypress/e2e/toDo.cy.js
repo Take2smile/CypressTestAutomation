@@ -14,7 +14,8 @@ describe('toDo', () => {
       cy.visit('/editor')
       
       cy.wait(10000)
-
+    //test commit
+    
     newArticle.typeArticleTitleInput('Test Title')
     newArticle.typeArticleAboutInput('Article About Test')
     newArticle.typeArticleBodyInput('Test body for article')
