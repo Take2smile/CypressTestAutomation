@@ -17,9 +17,11 @@ cy.intercept('GET', 'https://api.realworld.io/api/articles/**').as('getArticles'
 
 cy.wait('@getArticles')
 
-//cy.get('.feed-toggle').contains('Your Feed')
+feed.elements.globalFeedAuthor().should('contains', 'Gerome')
 
-feed.elements.globalFeedToggle()
+//cy.get('.article-preview').eq('0').find('.author').invoke('text').should('contain', 'Gerome')
+
+//feed.elements.globalFeedToggle()
 
 
 
