@@ -1,5 +1,3 @@
-const { eq } = require("cypress/types/lodash")
-
 class feed {
 
     elements = {
