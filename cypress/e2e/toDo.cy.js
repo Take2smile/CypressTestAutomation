@@ -14,27 +14,33 @@ describe('toDo', () => {
 
 cy.intercept('GET', 'https://api.realworld.io/api/articles/**').as('getArticles')
 
-
 cy.wait('@getArticles')
 
-const articleTags = {}
+let feedData = []
 
-        cy.get('.article-preview').eq(1).find('.tag-list li').then( articleTags => {
+cy.get('.article-preview').then( article => {
 
-            cy.wrap(articleTags).each( tag => {
+ cy.wrap(article).each(( article, index, list) => {
 
-               cy.get(tag).invoke('text').then( tagText => {
+  let feedObj = {}
 
-                articleTags.test = tagText
+  feed.elements.globalFeedTitle(index).then( feedTitle => {
+    feedObj.title = feedTitle
 
-               })
+    feed.getArticleTags(index).then( tagsObj => {
+      feedObj.tags = tagsObj
 
-            })
+      cy.wrap(feedObj).then( feedObj => {
 
-        })
+        feedData.push(feedObj)
 
- cy.log(articleTags)
+        console.log(feedObj)
+  
+  })
+})})})
 
-})
+return cy.wrap(feedData)
+
+})})
 
 })

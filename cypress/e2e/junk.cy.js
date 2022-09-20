@@ -17,40 +17,42 @@ describe('toDo', () => {
     
     cy.wait('@getArticles')
 
-  let feedData = []
+    let feedData = []
 
-  const feedObj = {}
   
-  feed.elements.globalFeedAuthor(1).then( feedAuthor => {
+
+  cy.get('.article-preview').each(( article, index, list) => {
+
+    let feedObj = {}
+  
+  feed.elements.globalFeedAuthor(index).then( feedAuthor => {
     feedObj.author = feedAuthor
 
-  feed.elements.globalFeedDate(1).then( feedDate => {
+  feed.elements.globalFeedDate(index).then( feedDate => {
     feedObj.date = feedDate
 
-  feed.elements.globalFeedTitle(1).then( feedTitle => {
+  feed.elements.globalFeedTitle(index).then( feedTitle => {
     feedObj.title = feedTitle
 
-  feed.elements.globalFeedDesc(1).then( feedDesc => {
+  feed.elements.globalFeedDesc(index).then( feedDesc => {
     feedObj.description = feedDesc
 
-  feed.elements.globalFeedFavorites(1).then( feedFavorites => {
+  feed.elements.globalFeedFavorites(index).then( feedFavorites => {
     feedObj.favorites = feedFavorites
- 
-})})})})})
 
-  cy.log(feedObj)
+  feed.getArticleTags(index).then( tagsObj => {
+    feedObj.tags = tagsObj
 
+    feedData.push(feedObj)
+    cy.log(feedData)
 
- //feed.elements.globalFeedDate(1)
-
- 
-
-  
-
+  })})})})})})
 
 })
 
+return cy.wrap(feedData)
 
+})
 })
 
 

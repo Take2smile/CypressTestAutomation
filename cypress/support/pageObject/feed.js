@@ -12,25 +12,31 @@ class feed {
         globalFeedFavorites: (index) => cy.get('.article-preview').eq(index).find('app-favorite-button').invoke('text')
     }
 
-    // getArticleTags(index){
+    getArticleTags(index) {
 
-    //     const articleTags = {}
+        let articleTags = {}
+        let i = 0;
 
-    //     cy.get('.article-preview').eq(index).find('.tag-list').then( articleTags => {
+        cy.get('.article-preview').eq(index).find('.tag-list li')
+            .then(allArticleTags => {
 
-    //         cy.wrap(articleTags).each(($el, index, $list) => {
+                cy.wrap(allArticleTags).each( tag => {
 
-    //            cy.wrap($el).invoke('text').then( tagText => {
+                    cy.get(tag).invoke('text')
+                        .then(tagText => {
 
-    //             articleTags.index = tagText
+                            i++
 
-    //            })
+                            articleTags[i] = tagText
 
-    //         })
+                        })
 
-    //     })
+                })
 
-    // }
+            })
+    return cy.wrap(articleTags)
+    
+    }
 
 }
 
