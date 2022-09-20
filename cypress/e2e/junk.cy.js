@@ -19,40 +19,27 @@ describe('toDo', () => {
 
     let feedData = []
 
-  
+    cy.get('.article-preview').each((article, index, list) => {
 
-  cy.get('.article-preview').each(( article, index, list) => {
+      let feedObj = {}
 
-    let feedObj = {}
-  
-  feed.elements.globalFeedAuthor(index).then( feedAuthor => {
-    feedObj.author = feedAuthor
+    feed.elements.globalFeedTitle(index).then(feedTitle => {
+      feedObj.title = feedTitle })
 
-  feed.elements.globalFeedDate(index).then( feedDate => {
-    feedObj.date = feedDate
+    feed.elements.globalFeedDesc(index).then(feedDesc => {
+      feedObj.description = feedDesc })
 
-  feed.elements.globalFeedTitle(index).then( feedTitle => {
-    feedObj.title = feedTitle
+    feed.getArticleTags(index).then(tagsObj => {
+      feedObj.tags = tagsObj })
 
-  feed.elements.globalFeedDesc(index).then( feedDesc => {
-    feedObj.description = feedDesc
+    cy.then( ()=> {
+      feedData.push(feedObj)
+    })
+ })
 
-  feed.elements.globalFeedFavorites(index).then( feedFavorites => {
-    feedObj.favorites = feedFavorites
+ return cy.wrap(feedData)
 
-  feed.getArticleTags(index).then( tagsObj => {
-    feedObj.tags = tagsObj
-
-    feedData.push(feedObj)
-    cy.log(feedData)
-
-  })})})})})})
-
-})
-
-return cy.wrap(feedData)
-
-})
+  })
 })
 
 

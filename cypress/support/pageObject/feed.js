@@ -12,6 +12,42 @@ class feed {
         globalFeedFavorites: (index) => cy.get('.article-preview').eq(index).find('app-favorite-button').invoke('text')
     }
 
+    getArticlesData() {
+
+        let feedData = []
+
+    cy.get('.article-preview').each((article, index, list) => {
+
+      let feedObj = {}
+
+        this.elements.globalFeedAuthor(index).then(feedAuthor => {
+            feedObj.author = feedAuthor })
+
+        this.elements.globalFeedDate(index).then(feedDate => {
+          feedObj.date = feedDate })
+
+        this.elements.globalFeedTitle(index).then(feedTitle => {
+            feedObj.title = feedTitle })
+
+        this.elements.globalFeedDesc(index).then(feedDesc => {
+            feedObj.description = feedDesc })
+
+        this.elements.globalFeedFavorites(index).then(feedFavorites => {
+            feedObj.favorites = feedFavorites })
+
+        this.getArticleTags(index).then(tagsObj => {
+            feedObj.tags = tagsObj })
+        
+        cy.then( ()=> {
+            feedData.push(feedObj)
+            cy.log(feedData) })
+    })
+
+    return cy.wrap(feedData)
+
+    }
+    
+
     getArticleTags(index) {
 
         let articleTags = {}
